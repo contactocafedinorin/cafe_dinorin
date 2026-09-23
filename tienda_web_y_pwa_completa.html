@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>CAFÉ DINORÍN | El sabor que se queda en casa</title>
+
+  <!-- PWA Primary Color & Meta -->
+  <meta name="theme-color" content="#1b3b2b">
+  <meta name="description" content="Café 100% puro de las Altas Montañas de Veracruz, México. El sabor que se queda en casa.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Café Dinorín">
+
+  <!-- Font Awesome Icons & Tailwind CSS CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#13281d',
+              green: '#1b3b2b',
+              lightgreen: '#28533d',
+              gold: '#d4af37',
+              goldhover: '#c5a028',
+              cream: '#fdfbf7',
+              beige: '#f4efe6',
+              accent: '#8c2d19',
+              charcoal: '#222222'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Georgia', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Styles for PWA, Transitions, and Product Image Placeholders -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    .font-brand {
+      font-family: 'Cinzel', Georgia, serif;
+    }
+
+    body {
+      background-color: #fdfbf7;
+      color: #222222;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f4efe6;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1b3b2b;
+      border-radius: 4px;
+    }
+
+    /* Soft Glass Effect */
+    .glass-header {
+      background: rgba(27, 59, 43, 0.95);
+      backdrop-filter: blur(8px);
+    }
+
+    /* Product card shadow */
+    .card-craft {
+      box-shadow: 0 10px 25px -5px rgba(27, 59, 43, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-craft:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 30px -10px rgba(27, 59, 43, 0.2);
+    }
+
+    /* Pulse animation for PWA install button */
+    @keyframes pulse-subtle {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .animate-pwa {
+      animation: pulse-subtle 3s infinite ease-in-out;
+    }
+  </style>
+
+  <!-- Dynamic PWA Manifest Generation -->
+  <script>
+    const manifestData = {
+      "name": "CAFÉ DINORÍN",
+      "short_name": "Café Dinorín",
+      "description": "El sabor que se queda en casa - Altas Montañas de Veracruz",
+      "start_url": "./",
+      "display": "standalone",
+      "background_color": "#fdfbf7",
+      "theme_color": "#1b3b2b",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231b3b2b'/><text x='50%' y='60%' font-size='50' font-family='serif' fill='%23d4af37' text-anchor='middle'>D</text></svg>",
+          "sizes": "192x192",
+          "type": "image/svg+xml"
+        },
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231b3b2b'/><text x='50%' y='60%' font-size='50' font-family='serif' fill='%23d4af37' text-anchor='middle'>D</text></svg>",
+          "sizes": "512x512",
+          "type": "image/svg+xml"
+        }
+      ]
+    };
+    const stringManifest = JSON.stringify(manifestData);
+    const manifestBlob = new Blob([stringManifest], {type: 'application/json'});
+    const manifestURL = URL.createObjectURL(manifestBlob);
+    
+    const linkManifest = document.createElement('link');
+    linkManifest.rel = 'manifest';
+    linkManifest.href = manifestURL;
+    document.head.appendChild(linkManifest);
+  </script>
+</head>
+
+<body class="flex flex-col min-h-screen selection:bg-brand-gold selection:text-brand-dark">
+
+  <!-- Top Banner / PWA Alert Banner -->
+  <div id="pwaBanner" class="bg-brand-gold text-brand-dark text-xs sm:text-sm font-semibold py-2 px-4 text-center justify-between items-center hidden transition-all duration-300 shadow-md">
+    <span>📱 ¡Instala nuestra App en tu teléfono para comprar más fácil!</span>
+    <button onclick="installPWA()" class="ml-3 bg-brand-dark text-brand-gold px-3 py-1 rounded-full text-xs font-bold hover:bg-black transition-colors">
+      Instalar
+    </button>
+  </div>
+
+  <!-- Header & Navigation -->
+  <header class="sticky top-0 z-40 glass-header text-white border-b border-brand-gold/20 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo & Brand Name -->
+      <a href="#" class="flex items-center gap-3 group">
+        <!-- SVG Placeholder for Logo (Fallback for /images/logo.png) -->
+        <div class="w-12 h-12 rounded-full border-2 border-brand-gold bg-brand-dark flex items-center justify-center overflow-hidden shadow-inner group-hover:scale-105 transition-transform">
+          <img src="/images/logo.png" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\'fa-solid fa-mug-hot text-brand-gold text-xl\'></i>'" alt="CAFÉ DINORÍN Logo" class="w-full h-full object-cover">
+        </div>
+        <div>
+          <h1 class="font-brand text-lg sm:text-xl font-bold tracking-widest text-brand-gold">CAFÉ DINORÍN</h1>
+          <p class="text-[10px] sm:text-xs text-brand-cream/80 italic font-serif">"El sabor que se queda en casa"</p>
+        </div>
+      </a>
+
+      <!-- Actions Right -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <!-- Admin Panel Toggle Button -->
+        <button onclick="toggleAdminModal()" title="Panel de Administración" class="p-2 text-brand-cream hover:text-brand-gold transition-colors rounded-lg bg-brand-dark/50 border border-brand-gold/30 text-xs sm:text-sm flex items-center gap-1.5">
+          <i class="fa-solid fa-sliders text-brand-gold"></i>
+          <span class="hidden md:inline">Inventario / Admin</span>
+        </button>
+
+        <!-- Cart Button -->
+        <button onclick="toggleCartModal()" class="relative p-2.5 bg-brand-gold hover:bg-brand-goldhover text-brand-dark rounded-full transition-transform active:scale-95 shadow-md flex items-center justify-center">
+          <i class="fa-solid fa-basket-shopping text-lg"></i>
+          <span id="cartBadge" class="absolute -top-1 -right-1 bg-brand-accent text-white font-bold text-xs w-5 h-5 rounded-full flex items-center justify-center border-2 border-brand-green hidden">0</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative bg-brand-green text-white py-12 md:py-20 overflow-hidden border-b-4 border-brand-gold">
+    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:16px_16px]"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid md:grid-cols-2 gap-8 items-center">
+      <div class="text-center md:text-left space-y-4">
+        <span class="inline-block px-3 py-1 bg-brand-gold/20 border border-brand-gold/50 text-brand-gold text-xs font-semibold rounded-full uppercase tracking-wider">
+          <i class="fa-solid fa-mountain mr-1"></i> Altas Montañas de Veracruz
+        </span>
+        <h2 class="font-brand text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
+          Café Artesanal 100% Puro de Altura
+        </h2>
+        <p class="text-brand-cream/90 text-sm sm:text-base leading-relaxed max-w-xl">
+          Cosechado con dedicación en los campos montañosos de Veracruz. Disfruta un aroma profundo, acidez equilibrada y el cuerpo perfecto que reconforta a tu familia.
+        </p>
+        <div class="pt-2 flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+          <a href="#productos" class="px-6 py-3 bg-brand-gold hover:bg-brand-goldhover text-brand-dark font-bold rounded-xl transition-all shadow-lg text-center flex items-center justify-center gap-2">
+            <i class="fa-solid fa-mug-saucer"></i> Ver Presentaciones
+          </a>
+          <a href="#origen" class="px-6 py-3 border border-brand-gold/60 text-brand-cream hover:bg-brand-dark/40 font-semibold rounded-xl transition-all text-center">
+            Conoce Nuestro Origen
+          </a>
+        </div>
+      </div>
+
+      <!-- Feature Image Display -->
+      <div class="relative flex justify-center">
+        <div class="w-64 h-64 sm:w-80 sm:h-80 rounded-2xl border-4 border-brand-gold/40 shadow-2xl overflow-hidden bg-brand-dark flex items-center justify-center relative">
+          <!-- Fallback Visual SVG Container for Main Hero Bag -->
+          <svg class="w-full h-full p-6 text-brand-gold" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 40 L150 40 L160 180 L40 180 Z" fill="#13281d" stroke="#d4af37" stroke-width="3"/>
+            <path d="M50 40 L150 40 L140 65 L60 65 Z" fill="#28533d"/>
+            <circle cx="100" cy="115" r="35" fill="#1b3b2b" stroke="#d4af37" stroke-width="2"/>
+            <text x="100" y="112" font-family="Cinzel, serif" font-size="10" font-weight="bold" fill="#d4af37" text-anchor="middle">CAFÉ</text>
+            <text x="100" y="125" font-family="Cinzel, serif" font-size="9" font-weight="bold" fill="#fdfbf7" text-anchor="middle">DINORÍN</text>
+            <path d="M90 80 Q100 70 100 80 Q100 70 110 80" stroke="#d4af37" stroke-width="2" fill="none"/>
+          </svg>
+          <div class="absolute bottom-3 left-3 right-3 bg-brand-dark/90 backdrop-blur border border-brand-gold/30 p-2 rounded-lg text-center">
+            <span class="text-xs text-brand-gold font-semibold"><i class="fa-solid fa-leaf text-green-400"></i> Molido Fresco Diario</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Section -->
+  <main id="productos" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 flex-grow">
+    <div class="text-center mb-12">
+      <h3 class="font-brand text-2xl sm:text-3xl font-bold text-brand-green uppercase tracking-wide">
+        Nuestros Productos
+      </h3>
+      <div class="w-24 h-1 bg-brand-gold mx-auto my-3 rounded-full"></div>
+      <p class="text-gray-600 max-w-md mx-auto text-sm">
+        Selecciona la presentación ideal para tu hogar u oficina. Café de calidad artesanal.
+      </p>
+    </div>
+
+    <!-- Grid de Productos dinámico -->
+    <div id="productsGrid" class="grid sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <!-- Los productos se renderizan dinámicamente vía JavaScript -->
+    </div>
+  </main>
+
+  <!-- About & Origin Section -->
+  <section id="origen" class="bg-brand-beige py-16 border-t border-b border-brand-gold/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        
+        <!-- Story / Brand Info -->
+        <div class="space-y-4">
+          <div class="inline-flex items-center gap-2 text-brand-accent font-bold text-sm tracking-wider uppercase">
+            <i class="fa-solid fa-heart"></i> Tradición y Calidad
+          </div>
+          <h3 class="font-brand text-2xl sm:text-3xl font-bold text-brand-green">
+            Sobre CAFÉ DINORÍN
+          </h3>
+          <p class="text-gray-700 leading-relaxed text-sm sm:text-base">
+            En <strong>CAFÉ DINORÍN</strong> creemos que una buena taza de café es la excusa perfecta para reunir a la familia. Bajo nuestro eslogan <em>“El sabor que se queda en casa”</em>, llevamos a tu hogar un producto cultivado con pasión, respetando los tiempos de maduración y tostado perfecto para resaltar sus notas aromáticas únicas.
+          </p>
+          <div class="p-4 bg-white rounded-xl border-l-4 border-brand-gold shadow-sm">
+            <p class="text-xs sm:text-sm text-brand-dark italic font-serif">
+              "Garantizamos frescura total en cada bolsa. Desde la montaña hasta tu mesa sin intermediarios."
+            </p>
+          </div>
+        </div>
+
+        <!-- Origin Info -->
+        <div class="bg-brand-green text-brand-cream p-8 rounded-2xl shadow-xl relative overflow-hidden">
+          <div class="absolute -right-10 -bottom-10 opacity-10 text-brand-gold text-9xl">
+            <i class="fa-solid fa-mountain-sun"></i>
+          </div>
+          <h4 class="font-brand text-xl font-bold text-brand-gold mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-location-dot"></i> Origen: Altas Montañas de Veracruz
+          </h4>
+          <p class="text-xs sm:text-sm leading-relaxed text-brand-cream/90 mb-4">
+            Nuestro café se produce en el microclima privilegiado de la región de Altas Montañas en el estado de Veracruz, México. El clima húmedo, la altura y la riqueza del suelo otorgan características organolépticas excepcionales:
+          </p>
+          <ul class="space-y-2 text-xs sm:text-sm text-brand-cream/90">
+            <li class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-brand-gold"></i> Tueste medio ideal para resaltar dulzor natural.
+            </li>
+            <li class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-brand-gold"></i> Molienda fina/media idónea para cafetera o filtro.
+            </li>
+            <li class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-brand-gold"></i> Empacado de origen preservando aroma intacto.
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-brand-dark text-white py-10 border-t-2 border-brand-gold">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+      <div>
+        <h4 class="font-brand text-lg font-bold text-brand-gold mb-2">CAFÉ DINORÍN</h4>
+        <p class="text-xs text-gray-300">El sabor que se queda en casa.</p>
+        <p class="text-xs text-gray-400 mt-2">Altas Montañas de Veracruz, México.</p>
+      </div>
+      <div>
+        <h5 class="text-xs font-bold uppercase text-brand-gold tracking-widest mb-3">Zonas de Entrega</h5>
+        <ul class="text-xs text-gray-300 space-y-1">
+          <li>Xalapa, Veracruz</li>
+          <li>Martínez de la Torre, Veracruz</li>
+          <li>Veracruz Puerto</li>
+          <li>Envíos a todo México</li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="text-xs font-bold uppercase text-brand-gold tracking-widest mb-3">Atención Directa</h5>
+        <p class="text-xs text-gray-300 mb-2">¿Tienes alguna duda con tu pedido?</p>
+        <a id="footerWhatsappLink" href="#" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg text-xs transition-colors">
+          <i class="fa-brands fa-whatsapp text-sm"></i> Contactar por WhatsApp
+        </a>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 border-t border-gray-800 mt-8 pt-4 text-center text-[11px] text-gray-400">
+      <p>&copy; CAFÉ DINORÍN - Todos los derechos reservados. Listo para alojamiento en GitHub Pages.</p>
+    </div>
+  </footer>
+
+
+  <!-- MODAL: CARRITO DE COMPRAS -->
+  <div id="cartModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex justify-end opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-white w-full max-w-md h-full flex flex-col shadow-2xl transform translate-x-full transition-transform duration-300" id="cartSidebar">
+      <!-- Header Carrito -->
+      <div class="p-4 bg-brand-green text-white flex items-center justify-between border-b border-brand-gold">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-basket-shopping text-brand-gold"></i>
+          <h3 class="font-brand font-bold text-lg text-brand-gold">Tu Carrito</h3>
+        </div>
+        <button onclick="toggleCartModal()" class="text-white/80 hover:text-white text-xl p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Items del Carrito -->
+      <div id="cartItemsContainer" class="flex-grow overflow-y-auto p-4 space-y-4">
+        <!-- JS Injected items -->
+      </div>
+
+      <!-- Footer Carrito / Totales -->
+      <div class="p-4 bg-brand-beige border-t border-gray-200 space-y-3">
+        <div class="space-y-1 text-sm">
+          <div class="flex justify-between text-gray-600">
+            <span>Subtotal Productos:</span>
+            <span id="cartSubtotal">$0.00 MXN</span>
+          </div>
+          <div class="flex justify-between text-gray-600">
+            <span>Costo de Envío Estimado:</span>
+            <span id="cartShippingEstimate" class="font-semibold text-brand-green">Selecciona en checkout</span>
+          </div>
+          <div class="flex justify-between text-base font-bold text-brand-dark pt-2 border-t border-gray-300">
+            <span>Total:</span>
+            <span id="cartTotal" class="text-brand-accent">$0.00 MXN</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 pt-2">
+          <button onclick="toggleCartModal()" class="px-4 py-2.5 border border-brand-green text-brand-green hover:bg-brand-green/10 font-bold rounded-xl text-xs transition-colors">
+            Seguir comprando
+          </button>
+          <button id="btnProceedCheckout" onclick="openCheckoutModal()" class="px-4 py-2.5 bg-brand-gold hover:bg-brand-goldhover text-brand-dark font-bold rounded-xl text-xs transition-colors shadow flex items-center justify-center gap-1">
+            Proceder al pago <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CHECKOUT -->
+  <div id="checkoutModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-3 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-lg w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden my-auto">
+      
+      <!-- Checkout Header -->
+      <div class="p-4 bg-brand-green text-white flex items-center justify-between border-b border-brand-gold">
+        <div>
+          <h3 class="font-brand font-bold text-lg text-brand-gold">Datos de Entrega y Pago</h3>
+          <p class="text-xs text-brand-cream/80">Completa la información para procesar tu pedido</p>
+        </div>
+        <button onclick="closeCheckoutModal()" class="text-white/80 hover:text-white text-xl p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Form Body -->
+      <form id="checkoutForm" onsubmit="handleCheckoutSubmit(event)" class="p-5 overflow-y-auto space-y-4 text-xs sm:text-sm">
+        
+        <!-- Nombre Completo -->
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">Nombre Completo *</label>
+          <input type="text" id="custName" required placeholder="Ej. María Hernández" class="w-full p-2.5 rounded-lg border border-gray-300 focus:border-brand-green focus:ring-1 focus:ring-brand-green outline-none">
+        </div>
+
+        <!-- Teléfono / WhatsApp -->
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">Teléfono / WhatsApp *</label>
+          <input type="tel" id="custPhone" required placeholder="Ej. 2281234567" class="w-full p-2.5 rounded-lg border border-gray-300 focus:border-brand-green focus:ring-1 focus:ring-brand-green outline-none">
+        </div>
+
+        <!-- Zona de Envío / Estado / Municipio -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">Zona de Envío *</label>
+            <select id="shippingZoneSelect" onchange="updateShippingCostInCheckout()" required class="w-full p-2.5 rounded-lg border border-gray-300 focus:border-brand-green focus:ring-1 focus:ring-brand-green outline-none bg-white font-medium text-brand-green">
+              <!-- Carga dinámica de zonas -->
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">Estado *</label>
+            <input type="text" id="custState" value="Veracruz" required class="w-full p-2.5 rounded-lg border border-gray-300 focus:border-brand-green focus:ring-1 focus:ring-brand-green outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">Ciudad o Municipio *</label>
+          <input type="text" id="custCity" required placeholder="Ej. Xalapa" class="w-full p-2.5 rounded-lg border border-gray-300 focus:border-brand-green focus:ring-1 focus:ring-brand-green outline-none">
+        </div>
+
+        <!-- Dirección y Referencias -->
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">Dirección de Entrega *</label>
+          <input type="text" id="custAddress" required placeholder="Calle, número exterior e interior, colonia" class="w-full p-2.5 rounded-lg border border-gray-300 focus:border-brand-green focus:ring-1 focus:ring-brand-green outline-none">
+        </div>
+
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">Referencias de Entrega</label>
+          <input type="text" id="custRefs" placeholder="Ej. Casa portón verde entre calle A y B" class="w-full p-2.5 rounded-lg border border-gray-300 focus:border-brand-green focus:ring-1 focus:ring-brand-green outline-none">
+        </div>
+
+        <!-- Método de Pago -->
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">Método de Pago *</label>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="border border-gray-300 rounded-lg p-2.5 flex items-center gap-2 cursor-pointer hover:bg-brand-beige has-[:checked]:border-brand-green has-[:checked]:bg-brand-beige">
+              <input type="radio" name="payMethod" value="Transferencia bancaria" checked class="accent-brand-green">
+              <span class="text-xs font-semibold">Transferencia Bancaria</span>
+            </label>
+            <label class="border border-gray-300 rounded-lg p-2.5 flex items-center gap-2 cursor-pointer hover:bg-brand-beige has-[:checked]:border-brand-green has-[:checked]:bg-brand-beige">
+              <input type="radio" name="payMethod" value="Efectivo contra entrega" class="accent-brand-green">
+              <span class="text-xs font-semibold">Efectivo al Entregar</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Comentarios Adicionales -->
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">Notas / Comentarios Adicionales</label>
+          <textarea id="custNotes" rows="2" placeholder="Indicaciones especiales de molienda u horario de entrega..." class="w-full p-2.5 rounded-lg border border-gray-300 focus:border-brand-green focus:ring-1 focus:ring-brand-green outline-none"></textarea>
+        </div>
+
+        <!-- Resumen final de cobro en modal -->
+        <div class="p-3 bg-brand-beige rounded-xl border border-brand-gold/40 space-y-1 text-xs">
+          <div class="flex justify-between">
+            <span>Subtotal:</span>
+            <span id="chkSubtotal">$0.00 MXN</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Envío (<span id="chkZoneLabel">Zona</span>):</span>
+            <span id="chkShipping">$0.00 MXN</span>
+          </div>
+          <div class="flex justify-between font-bold text-sm text-brand-dark pt-1 border-t border-gray-300">
+            <span>Total a Pagar:</span>
+            <span id="chkTotal" class="text-brand-accent">$0.00 MXN</span>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="w-full py-3 bg-brand-green hover:bg-brand-dark text-brand-gold font-bold rounded-xl text-sm transition-colors shadow-lg flex items-center justify-center gap-2">
+          <i class="fa-solid fa-check-circle"></i> Confirmar Pedido
+        </button>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: CONFIRMACIÓN Y ENVÍO POR WHATSAPP / CORREO -->
+  <div id="orderModal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-3 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl text-center space-y-4 my-auto border-2 border-brand-gold">
+      
+      <div class="w-16 h-16 bg-brand-green text-brand-gold rounded-full flex items-center justify-center mx-auto text-2xl shadow-lg">
+        <i class="fa-solid fa-mug-hot"></i>
+      </div>
+
+      <h3 class="font-brand font-bold text-2xl text-brand-green">¡Pedido Generado!</h3>
+      <p class="text-xs text-gray-600">Revisa la información antes de enviar el comprobante directamente a nuestro WhatsApp o Correo.</p>
+
+      <!-- Previsualizador de Texto del Pedido -->
+      <div id="orderSummaryText" class="text-left bg-brand-beige p-4 rounded-xl text-xs font-mono text-gray-800 whitespace-pre-wrap max-h-60 overflow-y-auto border border-brand-gold/30">
+        <!-- Resumen dinámico -->
+      </div>
+
+      <!-- Botones de Acción de Envío -->
+      <div class="space-y-2 pt-2">
+        <a id="btnSendWhatsapp" href="#" target="_blank" class="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl text-sm transition-colors shadow flex items-center justify-center gap-2">
+          <i class="fa-brands fa-whatsapp text-lg"></i> Enviar Pedido por WhatsApp
+        </a>
+
+        <a id="btnSendEmail" href="#" class="w-full py-2.5 bg-brand-green hover:bg-brand-dark text-brand-gold font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-2">
+          <i class="fa-solid fa-envelope"></i> Preparar para Envío por Correo
+        </a>
+
+        <button onclick="closeOrderModal()" class="w-full py-2 text-gray-500 hover:text-gray-800 text-xs font-semibold">
+          Cerrar y Volver a la Tienda
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL: PANEL DE ADMINISTRACIÓN / INVENTARIO -->
+  <div id="adminModal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-3 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden my-auto">
+      
+      <!-- Admin Header -->
+      <div class="p-4 bg-brand-dark text-white flex items-center justify-between border-b border-brand-gold">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-sliders text-brand-gold"></i>
+          <h3 class="font-brand font-bold text-lg text-brand-gold">Panel de Control & Inventario</h3>
+        </div>
+        <button onclick="toggleAdminModal()" class="text-white/80 hover:text-white text-xl p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Admin Content -->
+      <div class="p-5 overflow-y-auto space-y-6 text-xs sm:text-sm">
+        
+        <!-- Configuración Número de WhatsApp -->
+        <div class="p-4 bg-brand-beige rounded-xl border border-brand-gold/40 space-y-2">
+          <h4 class="font-bold text-brand-green flex items-center gap-1.5">
+            <i class="fa-brands fa-whatsapp"></i> Número de WhatsApp Receptor
+          </h4>
+          <p class="text-xs text-gray-600">Escribe tu número de teléfono con código de país (ej. 522281234567 para México).</p>
+          <div class="flex gap-2">
+            <input type="text" id="adminPhoneInput" placeholder="Ej. 522281234567" class="flex-grow p-2 rounded border border-gray-300 font-mono text-xs">
+            <button onclick="saveAdminPhone()" class="px-4 py-2 bg-brand-green text-brand-gold font-bold rounded text-xs hover:bg-brand-dark">
+              Guardar
+            </button>
+          </div>
+        </div>
+
+        <!-- Edición de Productos e Inventario -->
+        <div>
+          <h4 class="font-bold text-brand-green mb-3 flex items-center gap-1.5">
+            <i class="fa-solid fa-boxes-stacked"></i> Existencias y Precios de Productos
+          </h4>
+          <div id="adminProductsContainer" class="space-y-3">
+            <!-- Render dinámico de productos para edición -->
+          </div>
+        </div>
+
+        <!-- Configuración de Costos de Envío por Zona -->
+        <div>
+          <h4 class="font-bold text-brand-green mb-3 flex items-center gap-1.5">
+            <i class="fa-solid fa-truck"></i> Tarifas de Envíos por Zona
+          </h4>
+          <div id="adminShippingContainer" class="space-y-2">
+            <!-- Render dinámico de tarifas de envío -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Admin Footer -->
+      <div class="p-4 bg-gray-100 border-t flex justify-between items-center text-xs">
+        <span class="text-gray-500">Los cambios se guardan localmente.</span>
+        <button onclick="toggleAdminModal()" class="px-4 py-2 bg-brand-green text-white font-bold rounded-lg hover:bg-brand-dark">
+          Cerrar Panel
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Application Logic JavaScript -->
+  <script>
+    /* ==========================================================================
+       ESTADO INICIAL DE LA APLICACIÓN Y BASE DE DATOS LOCAL
+       ========================================================================== */
+
+    // Configuración base por defecto
+    const DEFAULT_SETTINGS = {
+      whatsappNumber: "[PENDIENTE_NUMERO]", // Sustituir por el número de WhatsApp real (Ej: 522281234567)
+      emailContact: "[PENDIENTE_CORREO]"     // Sustituir por el correo real (Ej: ventas@cafedinorin.com)
+    };
+
+    // Productos Exactos requeridos
+    const DEFAULT_PRODUCTS = [
+      {
+        id: 'cafe-500g',
+        name: 'Café DINORÍN Molido',
+        presentation: '500 gramos',
+        price: 150,
+        stock: 50,
+        active: true,
+        imagePath: '/images/cafe-500g.png',
+        description: 'Bolsa de 500g de café artesanal de estricta altura molido fresco.'
+      },
+      {
+        id: 'cafe-1kg',
+        name: 'Café DINORÍN Molido',
+        presentation: '1 kilogramo (2 bolsas de 500g)',
+        price: 300,
+        stock: 30,
+        active: true,
+        imagePath: '/images/cafe-1kg.png',
+        description: 'Presentación de 1 kg ideal para el consumo familiar. Incluye 2 bolsas independientes de 500g.'
+      }
+    ];
+
+    // Zonas de Envío requeridas
+    const DEFAULT_SHIPPING_ZONES = [
+      { id: 'xalapa', name: 'Xalapa, Veracruz', cost: 30 },
+      { id: 'martinez', name: 'Martínez de la Torre, Veracruz', cost: 50 },
+      { id: 'veracruz-puerto', name: 'Veracruz, Veracruz (Puerto)', cost: 50 },
+      { id: 'nacional', name: 'Otros estados de México (Envío Nacional)', cost: 120 }
+    ];
+
+    // Estado en memoria
+    let appSettings = JSON.parse(localStorage.getItem('dinorin_settings')) || DEFAULT_SETTINGS;
+    let products = JSON.parse(localStorage.getItem('dinorin_products')) || DEFAULT_PRODUCTS;
+    let shippingZones = JSON.parse(localStorage.getItem('dinorin_shipping')) || DEFAULT_SHIPPING_ZONES;
+    let cart = JSON.parse(localStorage.getItem('dinorin_cart')) || [];
+    let deferredPrompt = null;
+
+    // Inicialización al cargar el DOM
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProducts();
+      updateCartUI();
+      populateShippingOptions();
+      updateFooterWhatsapp();
+      registerServiceWorker();
+    });
+
+    // Guardar cambios en LocalStorage
+    function saveData() {
+      localStorage.setItem('dinorin_settings', JSON.stringify(appSettings));
+      localStorage.setItem('dinorin_products', JSON.stringify(products));
+      localStorage.setItem('dinorin_shipping', JSON.stringify(shippingZones));
+      localStorage.setItem('dinorin_cart', JSON.stringify(cart));
+    }
+
+    /* ==========================================================================
+       PWA REGISTRATION & INSTALLATION
+       ========================================================================== */
+    function registerServiceWorker() {
+      if ('serviceWorker' in navigator) {
+        // Service worker dinámico creado vía Blob
+        const swCode = `
+          const CACHE_NAME = 'dinorin-v1';
+          self.addEventListener('install', (e) => {
+            self.skipWaiting();
+          });
+          self.addEventListener('fetch', (e) => {
+            e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+          });
+        `;
+        const blob = new Blob([swCode], { type: 'application/javascript' });
+        const swUrl = URL.createObjectURL(blob);
+
+        navigator.serviceWorker.register(swUrl)
+          .then(() => console.log('Service Worker registrado correctamente.'))
+          .catch(err => console.log('Error al registrar SW:', err));
+      }
+    }
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      const pwaBanner = document.getElementById('pwaBanner');
+      if (pwaBanner) pwaBanner.classList.remove('hidden');
+    });
+
+    function installPWA() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('El usuario aceptó instalar la PWA');
+          }
+          deferredPrompt = null;
+          document.getElementById('pwaBanner').classList.add('hidden');
+        });
+      }
+    }
+
+    /* ==========================================================================
+       RENDERIZADO DE PRODUCTOS EN TIENDA
+       ========================================================================== */
+    function renderProducts() {
+      const container = document.getElementById('productsGrid');
+      container.innerHTML = '';
+
+      products.forEach(product => {
+        if (!product.active) return; // Si está inactivo no se muestra en la tienda pública
+
+        const isOutOfStock = product.stock <= 0;
+
+        const card = document.createElement('div');
+        card.className = 'bg-white rounded-2xl overflow-hidden border border-brand-gold/30 card-craft flex flex-col justify-between';
+
+        // Placeholder SVG con fallback de imagen real
+        card.innerHTML = `
+          <div>
+            <div class="relative h-56 bg-brand-dark flex items-center justify-center p-4 overflow-hidden group">
+              
+              <!-- Imagen con Fallback SVG dinámico -->
+              <img src="${product.imagePath}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';" alt="${product.name}" class="w-full h-full object-contain">
+              
+              <!-- Fallback SVG cuando no existe la imagen real -->
+              <div class="w-full h-full justify-center items-center flex hidden">
+                <div class="text-center">
+                  <i class="fa-solid fa-box-archive text-5xl text-brand-gold mb-2"></i>
+                  <span class="block text-xs text-brand-cream/70 font-mono">${product.imagePath}</span>
+                  <span class="text-[10px] text-brand-gold font-bold uppercase tracking-wider">${product.presentation}</span>
+                </div>
+              </div>
+
+              ${isOutOfStock ? `
+                <div class="absolute inset-0 bg-black/75 flex items-center justify-center">
+                  <span class="bg-red-700 text-white font-bold px-3 py-1 rounded-full text-xs uppercase">Agotado</span>
+                </div>
+              ` : ''}
+
+              <span class="absolute top-3 right-3 bg-brand-green/90 text-brand-gold border border-brand-gold/40 text-[11px] font-bold px-2.5 py-1 rounded-full">
+                ${product.presentation}
+              </span>
+            </div>
+
+            <div class="p-5 space-y-2">
+              <h4 class="font-brand font-bold text-lg text-brand-green">${product.name}</h4>
+              <p class="text-xs text-gray-600 leading-relaxed">${product.description}</p>
+              
+              <div class="pt-2 flex items-baseline justify-between">
+                <div>
+                  <span class="text-2xl font-bold text-brand-accent">$${product.price}</span>
+                  <span class="text-xs font-semibold text-gray-500"> MXN</span>
+                </div>
+                <span class="text-[11px] ${product.stock < 10 ? 'text-amber-600 font-bold' : 'text-gray-500'}">
+                  Stock: ${product.stock} disp.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-5 pt-0">
+            <button onclick="addToCart('${product.id}')" ${isOutOfStock ? 'disabled' : ''} class="w-full py-3 ${isOutOfStock ? 'bg-gray-300 cursor-not-allowed text-gray-500' : 'bg-brand-green hover:bg-brand-dark text-brand-gold'} font-bold rounded-xl text-sm transition-colors shadow flex items-center justify-center gap-2">
+              <i class="fa-solid fa-cart-plus"></i> ${isOutOfStock ? 'Sin Existencias' : 'Agregar al Carrito'}
+            </button>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    /* ==========================================================================
+       LÓGICA DEL CARRITO DE COMPRAS
+       ========================================================================== */
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product || product.stock <= 0) return;
+
+      const cartItem = cart.find(item => item.id === productId);
+
+      if (cartItem) {
+        if (cartItem.quantity < product.stock) {
+          cartItem.quantity++;
+        } else {
+          showNotification(`Solo hay ${product.stock} piezas disponibles.`);
+          return;
+        }
+      } else {
+        cart.push({
+          id: product.id,
+          name: product.name,
+          presentation: product.presentation,
+          price: product.price,
+          quantity: 1
+        });
+      }
+
+      saveData();
+      updateCartUI();
+      showNotification(`¡${product.name} (${product.presentation}) agregado!`);
+    }
+
+    function updateQuantity(productId, delta) {
+      const item = cart.find(i => i.id === productId);
+      const product = products.find(p => p.id === productId);
+
+      if (!item || !product) return;
+
+      const newQty = item.quantity + delta;
+
+      if (newQty <= 0) {
+        removeFromCart(productId);
+      } else if (newQty <= product.stock) {
+        item.quantity = newQty;
+        saveData();
+        updateCartUI();
+      } else {
+        showNotification(`Límite de existencias alcanzado (${product.stock} máximo)`);
+      }
+    }
+
+    function removeFromCart(productId) {
+      cart = cart.filter(item => item.id !== productId);
+      saveData();
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const container = document.getElementById('cartItemsContainer');
+      const badge = document.getElementById('cartBadge');
+      const subtotalEl = document.getElementById('cartSubtotal');
+      const totalEl = document.getElementById('cartTotal');
+
+      const totalItems = cart.reduce((acc, i) => acc + i.quantity, 0);
+
+      // Badge count
+      if (totalItems > 0) {
+        badge.innerText = totalItems;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+
+      // Clear container
+      container.innerHTML = '';
+
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 text-gray-400 space-y-3">
+            <i class="fa-solid fa-basket-shopping text-4xl"></i>
+            <p class="text-sm font-medium">Tu carrito está vacío.</p>
+            <button onclick="toggleCartModal()" class="text-xs text-brand-green underline font-bold">Explorar Café DINORÍN</button>
+          </div>
+        `;
+        subtotalEl.innerText = '$0.00 MXN';
+        totalEl.innerText = '$0.00 MXN';
+        return;
+      }
+
+      let subtotal = 0;
+
+      cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        subtotal += itemTotal;
+
+        const row = document.createElement('div');
+        row.className = 'flex items-center justify-between p-3 bg-brand-cream rounded-xl border border-gray-200';
+        row.innerHTML = `
+          <div class="flex-grow pr-2">
+            <h5 class="font-bold text-xs text-brand-green">${item.name}</h5>
+            <span class="text-[10px] text-gray-500">${item.presentation}</span>
+            <div class="text-xs font-bold text-brand-accent mt-0.5">$${item.price} MXN</div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <div class="flex items-center border border-gray-300 rounded-lg bg-white overflow-hidden">
+              <button onclick="updateQuantity('${item.id}', -1)" class="px-2 py-1 text-xs text-gray-600 hover:bg-gray-100">-</button>
+              <span class="px-2 text-xs font-bold">${item.quantity}</span>
+              <button onclick="updateQuantity('${item.id}', 1)" class="px-2 py-1 text-xs text-gray-600 hover:bg-gray-100">+</button>
+            </div>
+
+            <button onclick="removeFromCart('${item.id}')" class="text-red-500 hover:text-red-700 p-1 text-sm">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+
+      subtotalEl.innerText = `$${subtotal.toFixed(2)} MXN`;
+      totalEl.innerText = `$${subtotal.toFixed(2)} MXN`;
+    }
+
+    /* ==========================================================================
+       MODALES Y CHECKOUT
+       ========================================================================== */
+    function toggleCartModal() {
+      const modal = document.getElementById('cartModal');
+      const sidebar = document.getElementById('cartSidebar');
+
+      if (modal.classList.contains('opacity-0')) {
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        sidebar.classList.remove('translate-x-full');
+      } else {
+        sidebar.classList.add('translate-x-full');
+        modal.classList.add('opacity-0', 'pointer-events-none');
+      }
+    }
+
+    function openCheckoutModal() {
+      if (cart.length === 0) {
+        showNotification('Tu carrito está vacío.');
+        return;
+      }
+      toggleCartModal(); // Cerrar carrito
+
+      const modal = document.getElementById('checkoutModal');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      updateShippingCostInCheckout();
+    }
+
+    function closeCheckoutModal() {
+      const modal = document.getElementById('checkoutModal');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function populateShippingOptions() {
+      const select = document.getElementById('shippingZoneSelect');
+      select.innerHTML = '';
+
+      shippingZones.forEach(zone => {
+        const option = document.createElement('option');
+        option.value = zone.id;
+        option.innerText = `${zone.name} - $${zone.cost} MXN`;
+        select.appendChild(option);
+      });
+    }
+
+    function updateShippingCostInCheckout() {
+      const zoneId = document.getElementById('shippingZoneSelect').value;
+      const selectedZone = shippingZones.find(z => z.id === zoneId) || shippingZones[0];
+
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const shippingCost = selectedZone ? selectedZone.cost : 0;
+      const total = subtotal + shippingCost;
+
+      document.getElementById('chkSubtotal').innerText = `$${subtotal.toFixed(2)} MXN`;
+      document.getElementById('chkZoneLabel').innerText = selectedZone.name.split(',')[0];
+      document.getElementById('chkShipping').innerText = `$${shippingCost.toFixed(2)} MXN`;
+      document.getElementById('chkTotal').innerText = `$${total.toFixed(2)} MXN`;
+    }
+
+    /* ==========================================================================
+       GENERACIÓN DE PEDIDO (WHATSAPP Y EMAIL)
+       ========================================================================== */
+    function handleCheckoutSubmit(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const zoneId = document.getElementById('shippingZoneSelect').value;
+      const state = document.getElementById('custState').value.trim();
+      const city = document.getElementById('custCity').value.trim();
+      const address = document.getElementById('custAddress').value.trim();
+      const refs = document.getElementById('custRefs').value.trim() || 'Sin referencias';
+      const payMethod = document.querySelector('input[name="payMethod"]:checked').value;
+      const notes = document.getElementById('custNotes').value.trim() || 'Ninguna';
+
+      const zone = shippingZones.find(z => z.id === zoneId);
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const shippingCost = zone ? zone.cost : 0;
+      const total = subtotal + shippingCost;
+
+      // Descontar inventario
+      cart.forEach(cartItem => {
+        const p = products.find(prod => prod.id === cartItem.id);
+        if (p) {
+          p.stock = Math.max(0, p.stock - cartItem.quantity);
+        }
+      });
+      saveData();
+      renderProducts();
+
+      // Formatear texto de resumen de pedido
+      let orderText = `☕ *NUEVO PEDIDO - CAFÉ DINORÍN*\n`;
+      orderText += `--------------------------------\n`;
+      orderText += `👤 *Cliente:* ${name}\n`;
+      orderText += `📱 *Teléfono:* ${phone}\n\n`;
+      orderText += `📦 *PRODUCTOS:* \n`;
+
+      cart.forEach(item => {
+        orderText += `• ${item.name} (${item.presentation}) x${item.quantity} - $${item.price * item.quantity} MXN\n`;
+      });
+
+      orderText += `\n💵 *Subtotal:* $${subtotal.toFixed(2)} MXN\n`;
+      orderText += `🚚 *Envío (${zone.name}):* $${shippingCost.toFixed(2)} MXN\n`;
+      orderText += `💰 *TOTAL A PAGAR:* $${total.toFixed(2)} MXN\n\n`;
+      orderText += `📍 *DIRECCIÓN DE ENTREGA:*\n`;
+      orderText += `${address}, ${city}, ${state}\n`;
+      orderText += `*Ref:* ${refs}\n\n`;
+      orderText += `💳 *Método de Pago:* ${payMethod}\n`;
+      orderText += `📝 *Notas:* ${notes}\n`;
+      orderText += `--------------------------------\n`;
+      orderText += `_El sabor que se queda en casa_`;
+
+      // Actualizar vista modal de confirmación
+      document.getElementById('orderSummaryText').innerText = orderText;
+
+      // Enlace de WhatsApp
+      const targetPhone = appSettings.whatsappNumber;
+      const encodedMsg = encodeURIComponent(orderText);
+      const waUrl = `https://wa.me/${targetPhone}?text=${encodedMsg}`;
+      document.getElementById('btnSendWhatsapp').href = waUrl;
+
+      // Enlace de Mailto
+      const mailSubject = encodeURIComponent(`Nuevo Pedido Café Dinorín - ${name}`);
+      const mailBody = encodeURIComponent(orderText);
+      const mailUrl = `mailto:${appSettings.emailContact}?subject=${mailSubject}&body=${mailBody}`;
+      document.getElementById('btnSendEmail').href = mailUrl;
+
+      // Limpiar carrito
+      cart = [];
+      saveData();
+      updateCartUI();
+
+      // Cerrar Checkout y abrir modal de orden
+      closeCheckoutModal();
+      const orderModal = document.getElementById('orderModal');
+      orderModal.classList.remove('opacity-0', 'pointer-events-none');
+    }
+
+    function closeOrderModal() {
+      const orderModal = document.getElementById('orderModal');
+      orderModal.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    /* ==========================================================================
+       PANEL DE ADMINISTRACIÓN E INVENTARIO
+       ========================================================================== */
+    function toggleAdminModal() {
+      const modal = document.getElementById('adminModal');
+      if (modal.classList.contains('opacity-0')) {
+        renderAdminData();
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+      } else {
+        modal.classList.add('opacity-0', 'pointer-events-none');
+      }
+    }
+
+    function renderAdminData() {
+      // WhatsApp Phone
+      document.getElementById('adminPhoneInput').value = appSettings.whatsappNumber;
+
+      // Products Admin
+      const pContainer = document.getElementById('adminProductsContainer');
+      pContainer.innerHTML = '';
+
+      products.forEach((p, idx) => {
+        const item = document.createElement('div');
+        item.className = 'p-3 bg-gray-50 rounded-xl border border-gray-200 grid grid-cols-1 sm:grid-cols-4 gap-2 items-center';
+        item.innerHTML = `
+          <div>
+            <span class="font-bold text-brand-green block">${p.name}</span>
+            <span class="text-[10px] text-gray-500">${p.presentation}</span>
+          </div>
+          <div>
+            <label class="text-[10px] text-gray-500 block">Precio (MXN):</label>
+            <input type="number" value="${p.price}" onchange="updateProductAdmin(${idx}, 'price', this.value)" class="w-full p-1 border rounded text-xs">
+          </div>
+          <div>
+            <label class="text-[10px] text-gray-500 block">Existencias (Stock):</label>
+            <input type="number" value="${p.stock}" onchange="updateProductAdmin(${idx}, 'stock', this.value)" class="w-full p-1 border rounded text-xs">
+          </div>
+          <div class="flex items-center gap-2 pt-2 sm:pt-0">
+            <label class="flex items-center gap-1 cursor-pointer">
+              <input type="checkbox" ${p.active ? 'checked' : ''} onchange="updateProductAdmin(${idx}, 'active', this.checked)" class="accent-brand-green">
+              <span class="text-xs font-semibold">Activo</span>
+            </label>
+          </div>
+        `;
+        pContainer.appendChild(item);
+      });
+
+      // Shipping Admin
+      const sContainer = document.getElementById('adminShippingContainer');
+      sContainer.innerHTML = '';
+
+      shippingZones.forEach((z, idx) => {
+        const item = document.createElement('div');
+        item.className = 'p-2 bg-gray-50 rounded-lg border border-gray-200 flex justify-between items-center';
+        item.innerHTML = `
+          <span class="font-medium text-xs text-brand-dark">${z.name}</span>
+          <div class="flex items-center gap-1">
+            <span class="text-xs">$</span>
+            <input type="number" value="${z.cost}" onchange="updateShippingAdmin(${idx}, this.value)" class="w-20 p-1 border rounded text-xs font-bold">
+            <span class="text-xs">MXN</span>
+          </div>
+        `;
+        sContainer.appendChild(item);
+      });
+    }
+
+    function saveAdminPhone() {
+      const val = document.getElementById('adminPhoneInput').value.trim();
+      if (val) {
+        appSettings.whatsappNumber = val;
+        saveData();
+        updateFooterWhatsapp();
+        showNotification('Número de WhatsApp actualizado.');
+      }
+    }
+
+    function updateProductAdmin(index, field, value) {
+      if (field === 'price' || field === 'stock') {
+        products[index][field] = parseFloat(value) || 0;
+      } else if (field === 'active') {
+        products[index][field] = Boolean(value);
+      }
+      saveData();
+      renderProducts();
+    }
+
+    function updateShippingAdmin(index, costValue) {
+      shippingZones[index].cost = parseFloat(costValue) || 0;
+      saveData();
+      populateShippingOptions();
+    }
+
+    function updateFooterWhatsapp() {
+      const link = document.getElementById('footerWhatsappLink');
+      if (link) {
+        link.href = `https://wa.me/${appSettings.whatsappNumber}?text=${encodeURIComponent('Hola CAFÉ DINORÍN, me gustaría obtener más información sobre su café de Veracruz.')}`;
+      }
+    }
+
+    /* ==========================================================================
+       NOTIFICACIONES FLOTANTES
+       ========================================================================== */
+    function showNotification(msg) {
+      const toast = document.createElement('div');
+      toast.className = 'fixed bottom-5 right-5 bg-brand-dark text-brand-gold border border-brand-gold px-4 py-3 rounded-xl shadow-2xl z-50 text-xs font-semibold flex items-center gap-2 transform translate-y-10 opacity-0 transition-all duration-300';
+      toast.innerHTML = `<i class="fa-solid fa-mug-hot"></i> <span>${msg}</span>`;
+
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-10', 'opacity-0');
+      }, 50);
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-10', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
